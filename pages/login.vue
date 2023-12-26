@@ -1,7 +1,5 @@
 <script setup lang="ts">
 const client = useSupabaseClient();
-
-
 async function login(){
   await client.auth.signInWithOAuth({provider: 'google', options: {
       redirectTo: `${window.location.origin}/confirm`,
@@ -10,22 +8,19 @@ async function login(){
 </script>
 
 <template>
-  <Card
+  <UCard
       class="mt-28"
   >
-    <h2 class="text-4xl mb-8">xx counter</h2>
+    <h2 class="text-4xl mb-8">Dny štěstí</h2>
     <p class="text-slate-400">
-      Ultimatni cesta lorem ipsumUltimatni cesta lorem ipsumUltimatni cesta lorem ipsum
-      Ultimatni cesta lorem ipsumUltimatni cesta lorem ipsumUltimatni cesta lorem ipsumUltimatni cesta lorem ipsum
-      Ultimatni cesta lorem ipsumUltimatni cesta lorem ipsumUltimatni cesta lorem ipsum
-      Ultimatni cesta lorem ipsumUltimatni cesta lorem ipsum
+     'Dny štěstí' proměňuje každý den ve vztahu v dobrodružství. Počítejte společné chvíle, sdílejte fotky a zaznamenávejte milníky lásky. Intuitivní, zábavná a plná lásky!
     </p>
     <UButton
-      block
-      class="mt-8"
-      @click="login()"
+        block
+        class="mt-8"
+        @click="login()"
     >
-      Prihlasit se
+      Přihlásit se
     </UButton>
-  </Card>
+  </UCard>
 </template>

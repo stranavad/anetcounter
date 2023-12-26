@@ -1,22 +1,19 @@
 <template>
-  <Card
+  <UCard
     class="mt-28"
   >
-    <h2 class="text-4xl mb-8">Successfully loged in!</h2>
+    <h2 class="text-4xl mb-8">Úspěšně přihlášen!</h2>
     <p class="text-slate-400">
-      Ultimatni cesta lorem ipsumUltimatni cesta lorem ipsumUltimatni cesta lorem ipsum
-      Ultimatni cesta lorem ipsumUltimatni cesta lorem ipsumUltimatni cesta lorem ipsumUltimatni cesta lorem ipsum
-      Ultimatni cesta lorem ipsumUltimatni cesta lorem ipsumUltimatni cesta lorem ipsum
-      Ultimatni cesta lorem ipsumUltimatni cesta lorem ipsum
+      Vítejte v 'Dny štěstí'! Tady začíná cesta plná lásky a vzpomínek. Přidejte si významné okamžiky, sdílejte fotografie a sledujte, jak roste váš společný příběh. Pusťte se do toho a tvořte vzpomínky, které trvají věčně!
     </p>
     <UButton
         block
         class="mt-8"
         @click="navigateTo('/')"
     >
-      Pokracovat do aplikace
+      Pokračovat do aplikace
     </UButton>
-  </Card>
+  </UCard>
 </template>
 <script lang="ts" setup>
 const user = useSupabaseUser();
