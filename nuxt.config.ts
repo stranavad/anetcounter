@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    modules: ['@nuxtjs/supabase', '@nuxt/ui', "@nuxt/image", 'dayjs-nuxt'],
+    modules: ['@nuxtjs/supabase', '@nuxt/ui', "@nuxt/image", 'dayjs-nuxt', '@vite-pwa/nuxt'],
     colorMode: {
         preference: 'dark'
     },
