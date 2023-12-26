@@ -5,6 +5,7 @@
         <AuthUserMenu/>
       </div>
       <NuxtPage/>
+      <NuxtPwaManifest/>
     </div>
 </template>
 <script lang="ts" setup>
