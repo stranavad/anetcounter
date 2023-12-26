@@ -7,6 +7,7 @@ const client = useSupabaseClient();
 const props = defineProps<{event: RelationshipEventType}>();
 const emit = defineEmits<{(e: 'refresh'): void}>();
 
+const loading = ref(false);
 const editMode = ref(false);
 const file = ref<File | null>(null);
 const uploader = ref<HTMLInputElement>();
@@ -25,6 +26,7 @@ const state = reactive<Schema>({
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>){
+  loading.value = true;
   const eventData = event.data;
   if(file.value){
     const fileSplit = file.value!.name.split('.');
@@ -48,6 +50,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>){
     body: event.data
   })
 
+  loading.value = false;
   editMode.value = false;
 
   emit('refresh');
@@ -109,10 +112,10 @@ function triggerFileUpload(){
       @submit="onSubmit"
   >
     <UFormGroup label="Název Události" name="name" required>
-      <UInput v-model="state.name"/>
+      <UInput v-model="state.name" :disabled="loading"/>
     </UFormGroup>
     <UFormGroup label="Popis události" name="description">
-      <UTextarea v-model="state.description"/>
+      <UTextarea v-model="state.description" :disabled="loading"/>
     </UFormGroup>
     <UButton color="white" @click="triggerFileUpload()">
         <span v-if="file" class="overflow-hidden text-ellipsis">
@@ -129,15 +132,16 @@ function triggerFileUpload(){
       <UButton
           variant="outline"
           color="red"
+          :loading="loading"
           @click="deleteEvent"
       >
         Smazat
       </UButton>
       <div class="flex gap-4">
-        <UButton  variant="outline" @click="editMode = false">
+        <UButton  variant="outline" :loading="loading" @click="editMode = false">
           Zavřít
         </UButton>
-        <UButton  type="submit">
+        <UButton  type="submit" :loading="loading">
           Uložit
         </UButton>
       </div>

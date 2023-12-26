@@ -6,6 +6,7 @@ import type {FormSubmitEvent} from "#ui/types";
 const client = useSupabaseClient();
 const dayjs = useDayjs();
 
+const loading = ref(false);
 const props = defineProps<{relationship: RelationshipType}>();
 const emit = defineEmits<{(e: 'refresh'): void, (e: 'delete'): void}>();
 
@@ -59,6 +60,7 @@ const schema = z.object({
 type Schema = z.output<typeof schema>;
 
 async function onSubmit(event: FormSubmitEvent<Schema>){
+  loading.value = true;
   const {name, partner0, partner1, since} = event.data;
   const data = {
     name,
@@ -93,6 +95,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>){
     body: data
   });
 
+  loading.value = false;
+
   emit('refresh');
 }
 </script>
@@ -114,11 +118,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>){
       @submit="onSubmit"
   >
     <UFormGroup label="Název vztahu" name="name" required>
-      <UInput v-model="state.name"/>
+      <UInput v-model="state.name" :disabled="loading"/>
     </UFormGroup>
     <UFormGroup :label="relationship.users[0].name" name="partner0" required>
       <UInput
           v-model="state.partner0"
+          :disabled="loading"
       >
         <template #leading>
           <NuxtImg :src="relationship.users[0].avatarUrl" width="20" height="20" class="rounded-full"/>
@@ -128,13 +133,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>){
     <UFormGroup :label="relationship.users[1].name" name="partner1" required>
       <UInput
           v-model="state.partner1"
+          :disabled="loading"
       >
         <template #leading>
           <NuxtImg :src="relationship.users[1].avatarUrl" width="20" height="20" class="rounded-full"/>
         </template>
       </UInput>
     </UFormGroup>
-    <UButton color="white" @click="triggerFileUpload()">
+    <UButton color="white" :disabled="loading" @click="triggerFileUpload()">
         <span v-if="file" class="overflow-hidden text-ellipsis">
           {{file.name}}
         </span>
@@ -145,10 +151,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>){
     <UFormGroup label="Začátek vztahu" required>
       <DateInput class="mt-2" :value="state.since" @update:value="state.since = $event"/>
     </UFormGroup>
-    <UButton class="mt-4" block type="submit">
+    <UButton class="mt-4" block type="submit" :loading="loading">
       Uložit
     </UButton>
-    <UButton variant="outline" color="red" block @click="emit('delete')">
+    <UButton variant="outline" color="red" block :disabled="loading" @click="emit('delete')">
       Smazat vztah
     </UButton>
   </UForm>

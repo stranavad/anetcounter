@@ -7,6 +7,7 @@ const client = useSupabaseClient();
 const props = defineProps<{relationshipId: number}>();
 const emit = defineEmits<{(e: 'refresh'): void}>();
 
+const loading = ref(false);
 const open = ref(false);
 
 const schema = z.object({
@@ -48,6 +49,8 @@ function triggerFileUpload(){
 }
 
 async function onSubmit(event: FormSubmitEvent<Schema>){
+  loading.value = true;
+
   const eventData = event.data;
   if(file.value){
     const fileSplit = file.value!.name.split('.');
@@ -68,6 +71,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>){
     body: event.data
   })
 
+  loading.value = false;
   open.value = false;
 
   emit('refresh');
@@ -100,12 +104,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>){
         @submit="onSubmit"
     >
       <UFormGroup label="Název Události" name="name" required>
-        <UInput v-model="state.name"/>
+        <UInput v-model="state.name" :disabled="loading"/>
       </UFormGroup>
       <UFormGroup label="Popis události" name="description">
-        <UTextarea v-model="state.description"/>
+        <UTextarea v-model="state.description" :disabled="loading"/>
       </UFormGroup>
-      <UButton color="white" @click="triggerFileUpload()">
+      <UButton color="white" :disabled="loading" @click="triggerFileUpload()">
         <span v-if="file" class="overflow-hidden text-ellipsis">
           {{file.name}}
         </span>
@@ -117,10 +121,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>){
         <DateInput class="mt-2" v-model:value="state.date"/>
       </UFormGroup>
       <div class="flex mt-4 justify-between">
-        <UButton  variant="outline" @click="open = false">
+        <UButton :loading="loading"  variant="outline" @click="open = false">
           Zavřít
         </UButton>
-        <UButton  type="submit">
+        <UButton  type="submit" :loading="loading">
           Vytvořit
         </UButton>
       </div>
