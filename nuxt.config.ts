@@ -17,15 +17,25 @@ export default defineNuxtConfig({
     pwa: {
         registerType: 'autoUpdate',
         manifest: {
-            name: 'Dny stesti',
-            short_name: 'Dny stesti',
-            theme_color: '#ffffff',
+            name: 'Dny štěstí',
+            short_name: 'Dny štěstí',
+            theme_color: '#0f172a',
             icons: [
                 {
                     src: 'favicon.icon',
                     sizes: '250x250',
                     type: 'image/ico',
                 },
+                {
+                    src: 'pwa192.png',
+                    sizes: '192x192',
+                    type: 'image/png'
+                },
+                {
+                    src: 'pwa512.png',
+                    sizes: '512x512',
+                    type: 'image/png'
+                }
             ],
         },
         workbox: {
@@ -35,7 +45,7 @@ export default defineNuxtConfig({
             installPrompt: true,
             // you don't need to include this: only for testing purposes
             // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
-            periodicSyncForUpdates: 20,
+            periodicSyncForUpdates: 3600,
         },
     },
     devtools: {enabled: false}

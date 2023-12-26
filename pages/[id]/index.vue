@@ -4,7 +4,6 @@ import type {RelationshipEventType, RelationshipType} from "~/types";
 import type {Ref} from "vue";
 import EventCard from "~/components/EventCard.vue";
 import SupabaseImage from "~/components/SupabaseImage.vue";
-
 definePageMeta({
   middleware: "relationship"
 })
